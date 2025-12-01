@@ -39,33 +39,31 @@ func (g *Graph) AddEdge(from, to string) {
 	fromVertex.adjacent = append(fromVertex.adjacent, toVertex)
 }
 
-func (g *Graph) WalkFromNodeSlice(startNode string, courses *[]string) {
-	queue := []string{startNode}
-	i := 0
+func (g *Graph) WalkFromNodeSlice(startNode string, courses, queue []string) []string {
+	queue = append(queue, startNode)
 	for len(queue) > 0 {
 		currentNode := queue[0]
 		queue = queue[1:]
-		(*courses)[i] = currentNode
-		i++
+		if currentNode != startNode {
+			courses = append(courses, currentNode)
+		}
 		// adjacents to the current node
 		for _, adjacent := range g.getVertex(currentNode).adjacent {
-			if !slices.Contains(*courses, adjacent.key) {
+			if !slices.Contains(courses, adjacent.key) {
 				queue = append(queue, adjacent.key)
 			}
 		}
 	}
-	*courses = (*courses)[1:i]
+	return courses
 }
 
-func (g *Graph) WalkFromNodeMap(startNode string, courses *[]string) {
+func (g *Graph) WalkFromNodeMap(startNode string, courses, queue []string) []string {
 	visitedNodes := make(map[string]struct{})
-	queue := []string{startNode}
-	i := 0
+	queue = append(queue, startNode)
 	for len(queue) > 0 {
 		currentNode := queue[0]
 		queue = queue[1:]
 		visitedNodes[currentNode] = struct{}{}
-		i++
 		// adjacents to the current node
 		for _, adjacent := range g.getVertex(currentNode).adjacent {
 			if _, isFound := visitedNodes[adjacent.key]; !isFound {
@@ -74,15 +72,13 @@ func (g *Graph) WalkFromNodeMap(startNode string, courses *[]string) {
 		}
 	}
 
-	k := 0
 	for f := range visitedNodes {
 		if f == startNode {
 			continue
 		}
-		(*courses)[k] = f
-		k++
+		courses = append(courses, f)
 	}
-	*courses = (*courses)[0 : i-1]
+	return courses
 }
 
 func (g *Graph) getVertex(k string) *vertex {

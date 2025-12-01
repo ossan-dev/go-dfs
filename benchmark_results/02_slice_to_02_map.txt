@@ -1,0 +1,15 @@
+goos: linux
+goarch: amd64
+pkg: github.com/ossan-dev/go-bfs/bfs
+cpu: 13th Gen Intel(R) Core(TM) i7-1355U
+                │ 02_slice.txt │             02_map.txt             │
+                │    sec/op    │   sec/op     vs base               │
+WalkFromNode-12    632.0n ± 8%   902.1n ± 3%  +42.75% (p=0.002 n=6)
+
+                │ 02_slice.txt │            02_map.txt             │
+                │     B/op     │    B/op     vs base               │
+WalkFromNode-12     208.0 ± 0%   247.0 ± 0%  +18.75% (p=0.002 n=6)
+
+                │ 02_slice.txt │            02_map.txt             │
+                │  allocs/op   │ allocs/op   vs base               │
+WalkFromNode-12     12.00 ± 0%   14.00 ± 0%  +16.67% (p=0.002 n=6)

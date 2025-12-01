@@ -27,3 +27,11 @@ We improved a lot here. The slice implementation was less performant in v0. By v
 The file `00_slice_to_01_slice.txt` shows we improved the bytes/op by 47%. The allocations/op dropped by 25%.
 
 > From memory perspective: the v1 version of Slice implementation has the lowest memory usage. The winner is the v1 of the Slice implementation.
+
+### 02 - Version
+
+In this version, I improved how I wrote the benchmarks of my application.
+Plus, I used a slightly more efficient version since I'm passing to the `WalkFromNode` method a pre-allocated slice for both the courses and the queue to scan.
+This allowed me to safely rely on the `append` built-in function without worrying about the extra-allocations due to missing space.
+
+After these optimizations, we're left with the more performant solution, which is the `Slice` implementation.

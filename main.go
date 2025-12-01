@@ -33,10 +33,11 @@ func main() {
 	}
 
 	// test the graph
-	coursesToAttend := make([]string, len(courses))
-	g.WalkFromNodeSlice("networks", &coursesToAttend)
-	fmt.Printf("slice\tnetworks: %q\n", coursesToAttend)
-	coursesToAttend2 := make([]string, len(courses))
-	g.WalkFromNodeMap("networks", &coursesToAttend2)
-	fmt.Printf("map\tnetworks: %q\n", coursesToAttend2)
+	coursesToAttend := make([]string, 0, len(courses))
+	queue := make([]string, 0, len(courses))
+	toPrint := g.WalkFromNodeSlice("networks", coursesToAttend, queue)
+	fmt.Printf("slice\tnetworks: %q\n", toPrint)
+	coursesToAttend2 := make([]string, 0, len(courses))
+	toPrint = g.WalkFromNodeMap("networks", coursesToAttend2, queue)
+	fmt.Printf("map\tnetworks: %q\n", toPrint)
 }
